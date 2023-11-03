@@ -41,8 +41,14 @@
 }
 .search button img {
     width:20px;
+    border-radius: 100%;
 }
-/* .winfo .icon {
+.winfo img{
+    width: 100px;
+    height: auto; 
+    border-radius: 100%;
+}
+.winfo .icon {
     margin-top: 20px;
     width:170px;
 }
@@ -71,4 +77,4 @@
 .details .col img {
     width: 45px;
     margin-right: 10px;
-} */
+}
