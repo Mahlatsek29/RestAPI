@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import search from './images/search.png';
 import clouds from './images/clouds.png';
@@ -11,14 +11,32 @@ function Home() {
     name: "London",
     humidity: 10,
     speed: 2,
+    image: ''
   });
   const [name, setName] = useState('');
 
-  useEffect(() => {
+  const handleClick = () => {
     if (name !== "") {
       const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=462e1dc9c41358e13659fbe8c30ae5a0&units=metric`;
       axios.get(apiUrl)
         .then((res) => {
+          let imagePath = '';
+          if (res.data.weather[0].main == "Clouds") {
+            imagePath = './images/clouds.png'
+          } else if (res.data.weather[0].main == "Clear") {
+            imagePath = './image.clear.png'
+          }else if (res.data.weather[0].main == "Rain") {
+            imagePath = './image.rain.png'
+          }
+          else if (res.data.weather[0].main == "Drizzle") {
+            imagePath = './image.drizzle.png'
+          }
+          else if (res.data.weather[0].main == "Mist") {
+            imagePath = './image.mist.png'
+          }else {
+            imagePath= './images/clouds,png'
+          }
+
           console.log(res.data);
           setData({
             celcius: res.data.main.temp,
@@ -29,10 +47,6 @@ function Home() {
         })
         .catch((err) => console.log(err));
     }
-  }, [name]);
-
-  const handleClick = () => {
-   
   };
 
   return (
