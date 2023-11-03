@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import axios from 'axios';
-import search from './images/search.jpg';
+import search from './images/search.png';
 import clouds from './images/clouds.png';
 
 function Home() {
