@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import search from './images/search.png';
-import clouds from './images/clouds.png';
+import clouds from './images/cloudy.png';
 import wind from './images/wind.png';
+import rain from './images/rain.png';
+import clear from './images/clear-sky.png';
+import drizzle from './images/drizzle.png';
+import mist from './images/mist.png';
+
 import './style.css';
 
 function Home() {
@@ -21,28 +26,27 @@ function Home() {
       axios.get(apiUrl)
         .then((res) => {
           let imagePath = '';
-          if (res.data.weather[0].main == "Clouds") {
-            imagePath = './images/clouds.png'
-          } else if (res.data.weather[0].main == "Clear") {
-            imagePath = './image.clear.png'
-          }else if (res.data.weather[0].main == "Rain") {
-            imagePath = './image.rain.png'
+          if (res.data.weather[0].main === "Clouds") {
+            imagePath = clouds;
+          } else if (res.data.weather[0].main === "Clear") {
+            imagePath = clear;
+          } else if (res.data.weather[0].main === "Rain") {
+            imagePath = rain;
+          } else if (res.data.weather[0].main === "Drizzle") {
+            imagePath = drizzle;
+          } else if (res.data.weather[0].main === "Mist") {
+            imagePath = mist;
+          } else {
+            imagePath = clouds;
           }
-          else if (res.data.weather[0].main == "Drizzle") {
-            imagePath = './image.drizzle.png'
-          }
-          else if (res.data.weather[0].main == "Mist") {
-            imagePath = './image.mist.png'
-          }else {
-            imagePath= './images/clouds,png'
-          }
-
+  
           console.log(res.data);
           setData({
             celcius: res.data.main.temp,
             name: res.data.name,
             humidity: res.data.main.humidity,
             speed: res.data.wind.speed,
+            image: imagePath
           });
         })
         .catch((err) => console.log(err));
@@ -57,12 +61,12 @@ function Home() {
           <button><img src={search} alt="Search" onClick={handleClick} /></button>
         </div>
         <div className="winfo">
-          <img src={clouds} alt="Clouds" />
+          <img src={data.image} alt="Weather" />
           <h1>{Math.round(data.celcius)}°c</h1>
           <h2>{data.name}</h2>
           <div className='details'>
             <div className='col'>
-              <img src={clouds} alt='' />
+              <img src={data.image} alt='' />
             </div>
             <p>{Math.round(data.humidity)}</p>
             <p>Humidity</p>
