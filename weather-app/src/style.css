@@ -78,3 +78,8 @@
     width: 45px;
     margin-right: 10px;
 }
+.error {
+   color: white;
+   text-align: left;
+   margin-right: 10px;
+}

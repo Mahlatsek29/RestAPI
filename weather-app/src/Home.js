@@ -16,9 +16,10 @@ function Home() {
     name: "London",
     humidity: 10,
     speed: 2,
-    image: ''
+    image: './images/cloudy.png'
   });
   const [name, setName] = useState('');
+  const [error, setError] = useState('');
 
   const handleClick = () => {
     if (name !== "") {
@@ -39,7 +40,7 @@ function Home() {
           } else {
             imagePath = clouds;
           }
-  
+
           console.log(res.data);
           setData({
             celcius: res.data.main.temp,
@@ -48,8 +49,17 @@ function Home() {
             speed: res.data.wind.speed,
             image: imagePath
           });
+          setError('');
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          if (err.response && err.response.status === 404) {
+            setError('Invalid City Name');
+          } else {
+            setError('An error occurred while fetching data');
+          }
+        });
+    } else {
+      setError('Please enter a city name');
     }
   };
 
@@ -59,6 +69,9 @@ function Home() {
         <div className='search'>
           <input type="text" placeholder='Enter City Name' onChange={e => setName(e.target.value)} />
           <button><img src={search} alt="Search" onClick={handleClick} /></button>
+        </div>
+        <div className='error'>
+          <p>{error}</p>
         </div>
         <div className="winfo">
           <img src={data.image} alt="Weather" />
